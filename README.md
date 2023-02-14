@@ -7,7 +7,7 @@ App showing physical properties of given amino acid sequence.
 Follow below steps to install and run Bioinformatic App in the correct way.
 
 ```bash
-  git clone git@github.com:majkelEXE/Bioinformatic_App.git
+  git clone https://github.com/majkelEXE/Bioinformatic_App.git
 
   cd Bioinformatic_App
 
