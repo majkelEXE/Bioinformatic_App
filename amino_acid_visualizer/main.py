@@ -12,12 +12,12 @@ from PySide6.QtWidgets import QMainWindow, QLabel, QWidget, QVBoxLayout, QGridLa
 from PySide6.QtCore import Qt
 from PySide6.QtSvgWidgets import QSvgWidget
 
-svg = open('./venv/Lib/site-packages/pikachu/smiles/smiles.py', "rt")
+svg = open('../.venv/Lib/site-packages/pikachu/smiles/smiles.py', "rt")
 data = svg.read()
 data = data.replace("'p', 's'", "'p', 's', 'Se'")
 svg.close()
 
-svg = open('./venv/Lib/site-packages/pikachu/smiles/smiles.py', "wt")
+svg = open('../.venv/Lib/site-packages/pikachu/smiles/smiles.py', "wt")
 svg.write(data)
 svg.close()
 
