@@ -92,7 +92,7 @@ def get_from_file(name):
 def check_sequence(rna):
     # check if sequence contains 'T' and replace it with 'U'
     rna = rna.upper()
-    print(rna)
+    # print(rna)
     if 'T' in rna and 'U' not in rna:
         rna = rna.replace('T', 'U')
     # check if sequence is correct
