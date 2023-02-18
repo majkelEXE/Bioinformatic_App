@@ -1,7 +1,7 @@
 import string
 
 # CORRECT
-aminoacidToPtotein = {
+aminoacidToProtein = {
     'UUU': 'F', 'UUC': 'F',
     'UUA': 'L', 'UUG': 'L',
     'UCU': 'S', 'UCC': 'S', 'UCA': 'S', 'UCG': 'S',
@@ -44,7 +44,7 @@ def translate_to_protein(rna, option):
     # convert RNA to protein
     protein = []
     for i in rna:
-        protein.append(aminoacidToPtotein.get(i))
+        protein.append(aminoacidToProtein.get(i))
     protein = ''.join(protein)
     # print('---' +protein)
     # find start and stop codons
