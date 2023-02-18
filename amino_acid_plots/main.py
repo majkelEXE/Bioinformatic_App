@@ -13,7 +13,7 @@ from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg, NavigationTool
 
 matplotlib.use('Qt5Agg')
 
-from PySide6.QtWidgets import QMainWindow, QVBoxLayout, QWidget, QApplication, QLineEdit, QPushButton
+from PySide2.QtWidgets import QMainWindow, QVBoxLayout, QWidget, QApplication, QLineEdit, QPushButton
 
 from modules.plots_tools.ExtendedTextBox import ExtendedTextBox
 from modules.plots_tools.DragHandler import DragHandler
@@ -115,4 +115,4 @@ class MainWindow(QMainWindow):
 
 app = QApplication(sys.argv)
 w = MainWindow()
-app.exec()
+app.exec_()

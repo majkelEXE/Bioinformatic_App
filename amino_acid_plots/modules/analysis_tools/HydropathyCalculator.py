@@ -1,5 +1,4 @@
-from plots_module.analysis_tools.generic_calc_tools.LinearWeightCalculator import LinearWeightCalculator
-
+from modules.analysis_tools.generic_calc_tools.LinearWeightCalculator import LinearWeightCalculator
 class HydropathyCalculator:
     @staticmethod
     def hydropathy(*args):
