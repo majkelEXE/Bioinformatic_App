@@ -4,9 +4,11 @@ import matplotlib
 import matplotlib.pyplot as plt
 from matplotlib import gridspec
 from matplotlib.patches import BoxStyle
-from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg
+from matplotlib.backends.backend_qtagg import FigureCanvasQTAgg
 
-from PySide2.QtWidgets import QMainWindow, QVBoxLayout, QWidget, QApplication, QLineEdit, QPushButton
+from PySide6 import QtWidgets
+from PySide6.QtWidgets import QMainWindow, QWidget, QVBoxLayout, QPushButton, \
+    QLineEdit
 
 from modules.plots_tools.ExtendedTextBox import ExtendedTextBox
 from modules.plots_tools.DragHandler import DragHandler
@@ -18,7 +20,7 @@ from modules.analysis_tools.HydropathyCalculator import HydropathyCalculator
 from modules.analysis_tools.PolarityCalculator import PolarityCalculator
 from modules.analysis_tools.DisordersCalculator import DisordersCalculator
 
-matplotlib.use('Qt5Agg')
+matplotlib.use('QtAgg')
 
 
 class MplCanvas(FigureCanvasQTAgg):
@@ -109,6 +111,9 @@ class MainWindow(QMainWindow):
         self.resize(800, 100 * 10)
 
 
-app = QApplication(sys.argv)
-w = MainWindow()
-app.exec_()
+app = QtWidgets.QApplication(sys.argv)
+
+window = MainWindow()
+window.show()
+
+app.exec()
