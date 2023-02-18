@@ -69,32 +69,35 @@ def get_from_file(name):
 
 
 def check_sequence(rna):
-    result = {
-        'option1': [],
-        'option2': [],
-        'option3': []
-    }
+    if len(rna) > 2:
+        result = {
+            'option1': [],
+            'option2': [],
+            'option3': []
+        }
 
-    rna = rna.upper()
-    if 'T' in rna and 'U' not in rna:
-        rna = rna.replace('T', 'U')
-    lettersToCheck = list(string.printable)
-    lettersToCheck.remove('U')
-    lettersToCheck.remove('A')
-    lettersToCheck.remove('G')
-    lettersToCheck.remove('C')
-    if any(letter in rna for letter in lettersToCheck) or len(rna) == 0:
-        return 0
+        rna = rna.upper()
+        if 'T' in rna and 'U' not in rna:
+            rna = rna.replace('T', 'U')
+        lettersToCheck = list(string.printable)
+        lettersToCheck.remove('U')
+        lettersToCheck.remove('A')
+        lettersToCheck.remove('G')
+        lettersToCheck.remove('C')
+        if any(letter in rna for letter in lettersToCheck) or len(rna) == 0:
+            return 0
+        else:
+            option1 = [rna[i:i + 3] for i in range(0, len(rna), 3)]
+            option2 = [rna[i:i + 3] for i in range(1, len(rna), 3)]
+            option3 = [rna[i:i + 3] for i in range(2, len(rna), 3)]
+
+            translate_to_protein(option1, 1, result)
+            translate_to_protein(option2, 2, result)
+            translate_to_protein(option3, 3, result)
+
+            return result
     else:
-        option1 = [rna[i:i + 3] for i in range(0, len(rna), 3)]
-        option2 = [rna[i:i + 3] for i in range(1, len(rna), 3)]
-        option3 = [rna[i:i + 3] for i in range(2, len(rna), 3)]
-
-        translate_to_protein(option1, 1, result)
-        translate_to_protein(option2, 2, result)
-        translate_to_protein(option3, 3, result)
-
-        return result
+        return 0
 
 # example RNA sequence
 # sequence = 'AAUGUCGGUCAGCUUUGAGAAAACCAUGGUCAAAAUGAGCGCUUUGAAGCAUUUCGGCCAGAAGCAUGCGGGUAUGCCAGCCUUACCAGACGCAAUUAGGCACAGUGCCCCCUCAGCUCCGACUGAGAACCGCGCAGACCUAUUAUAUGCAAGUGUGAUGCGCCAGCUAACAGUGUACAGACACGUGCGUUAGUCCCUGCGUCCCGAUCCCAACGGAAAAGGUGAUAUUGCGGGGUUCGCACUGGGCUUCACUAAAGGCUAGGGACCUCGAAGUCUUUUCAGCCGUUAACUCUUACAUAC'
