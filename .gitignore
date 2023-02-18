@@ -129,3 +129,7 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# svg patterns
+amino_acid_visualizer/structural_pattern.svg
+amino_acid_visualizer/structural_pattern_with_highlights.svg
