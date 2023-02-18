@@ -134,6 +134,9 @@ class MainWindow(QMainWindow):
         self.setWindowTitle("Structural Pattern")
         self.setFixedSize(QSize(600, 400))
 
+        self.win = None
+        self.error = None
+
         self.sequence = QLineEdit()
         self.sequence.setPlaceholderText("Provide Sequence")
 
@@ -145,14 +148,14 @@ class MainWindow(QMainWindow):
         for i, acid in enumerate(acceptable_acids):
             button = QPushButton(acid)
 
-            button.pressed.connect(lambda a=acid: self.addAcid(a))
+            button.pressed.connect(lambda a=acid: self.add_acid(a))
 
             self.acidButtons.addWidget(button, math.floor(i / 7), i - (7 * math.floor(i / 7)))
 
         self.mainLayout.addLayout(self.acidButtons)
 
         self.generateButton = QPushButton("Generate")
-        self.generateButton.pressed.connect(self.displayStructuralPattern)
+        self.generateButton.pressed.connect(self.display_structural_pattern)
         self.mainLayout.addWidget(self.generateButton)
 
         self.svgLayout = QHBoxLayout()
@@ -172,14 +175,14 @@ class MainWindow(QMainWindow):
         widget.setLayout(self.mainLayout)
         self.setCentralWidget(widget)
 
-    def addAcid(self, acid):
+    def add_acid(self, acid):
         self.sequence.setText(self.sequence.text() + acid)
 
-    def raiseError(self, message):
+    def raise_error(self, message):
         self.error = True
         QMessageBox.critical(None, 'Error!', message, QMessageBox.Ok)
 
-    def showSvg(self, file, sequence_string=None):
+    def show_svg(self, file, sequence_string=None):
         svg = QSvgWidget(file)
         svg.renderer().setAspectRatioMode(Qt.KeepAspectRatio)
 
@@ -211,7 +214,7 @@ class MainWindow(QMainWindow):
         self.win.setLayout(layout)
         self.win.showMaximized()
 
-    def saveSvgs(self):
+    def save_svgs(self):
         directory = QFileDialog().getExistingDirectory(self, "Select directory")
 
         svg = open('structural_pattern.svg', "rt")
@@ -230,7 +233,7 @@ class MainWindow(QMainWindow):
         new_svgH.write(data)
         new_svgH.close()
 
-    def displayStructuralPattern(self):
+    def display_structural_pattern(self):
         self.error = False
 
         # for acid, color in amino_acids.items():
@@ -244,7 +247,7 @@ class MainWindow(QMainWindow):
                 generate_structural_pattern(sequence)
                 generate_structural_pattern_with_highlights(sequence)
             except:
-                self.raiseError("This is invalid sequence!")
+                self.raise_error("This is invalid sequence!")
 
             if not self.error:
 
@@ -253,20 +256,20 @@ class MainWindow(QMainWindow):
 
                 svg = QSvgWidget("structural_pattern.svg")
                 svg.renderer().setAspectRatioMode(Qt.KeepAspectRatio)
-                svg.mouseReleaseEvent = lambda event: self.showSvg("structural_pattern.svg")
+                svg.mouseReleaseEvent = lambda event: self.show_svg("structural_pattern.svg")
                 self.svgLayout.addWidget(svg, 50)
 
                 svgH = QSvgWidget("structural_pattern_with_highlights.svg")
                 svgH.renderer().setAspectRatioMode(Qt.KeepAspectRatio)
-                svgH.mouseReleaseEvent = lambda event: self.showSvg("structural_pattern_with_highlights.svg", sequence)
+                svgH.mouseReleaseEvent = lambda event: self.show_svg("structural_pattern_with_highlights.svg", sequence)
                 self.svgLayout.addWidget(svgH, 50)
 
                 self.saveButton.setHidden(False)
-                self.saveButton.pressed.connect(self.saveSvgs)
+                self.saveButton.pressed.connect(self.save_svgs)
 
                 self.mass.setText("Mass: " + str(round(get_molecular_mass(sequence), 5)))
         else:
-            self.raiseError("Please Provide Sequence!")
+            self.raise_error("Please Provide Sequence!")
 
 
 if not QtWidgets.QApplication.instance():
