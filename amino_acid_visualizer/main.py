@@ -160,11 +160,13 @@ class VisualizerWindow(QMainWindow):
 
         self.display_structural_pattern(protein)
 
-        self.show()
+        if not self.error:
+            self.show()
 
     def raise_error(self, message):
         self.error = True
-        QMessageBox.critical(None, 'Error!', message, QMessageBox.Ok)
+        QMessageBox.warning(None, 'Alert', message, QMessageBox.Ok)
+        self.hide()
 
     def show_svg(self, file, sequence_string=None):
         svg = QSvgWidget(file)
@@ -229,7 +231,7 @@ class VisualizerWindow(QMainWindow):
                 generate_structural_pattern(sequence)
                 generate_structural_pattern_with_highlights(sequence)
             except:
-                self.raise_error("This is invalid sequence!")
+                self.raise_error("This sequence can't be visualized")
 
             if not self.error:
 
