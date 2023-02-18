@@ -108,13 +108,17 @@ class MainWindow(QMainWindow):
     def generate_frame(self):
         self.clear_bottom_section()
 
-        for protein in self.analysedSequences[f"option{self.selectedFrame}"]:
+        selectedProteins = self.analysedSequences[f"option{self.selectedFrame}"]
+        for i, protein in enumerate(selectedProteins):
             protein_layout = QHBoxLayout()
             protein_layout.setContentsMargins(0, 10, 0, 10)  # left, top, right, bottom
             self.bottom_layout.addLayout(protein_layout)
 
+            proteinIndex = QLabel(f"{str(i + 1)}.")
+            proteinIndex.setFixedWidth(15)
+            protein_layout.addWidget(proteinIndex)
+
             proteinName = QLabel(protein)
-            # proteinName.setAlignment(Qt.AlignCenter)
             protein_layout.addWidget(proteinName)
 
             visualizationButton = QPushButton("Visualization")
