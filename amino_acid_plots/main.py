@@ -1,15 +1,10 @@
 import sys
 
-from os import environ
-
 import matplotlib
 import matplotlib.pyplot as plt
 from matplotlib import gridspec
-from matplotlib.path import Path
 from matplotlib.patches import BoxStyle
-from matplotlib.offsetbox import AnchoredText
-from matplotlib.figure import Figure
-from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg, NavigationToolbar2QT as NavigationToolbar
+from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg
 
 matplotlib.use('Qt5Agg')
 
