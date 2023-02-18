@@ -1,4 +1,4 @@
-from aaindex.aaindex import aaindex
+from aaindex import aaindex1 as aaindex
 
 class LinearWeightCalculator:
     # def __init__(self, *args):
