@@ -22,6 +22,7 @@ class MainWindow(QMainWindow):
         self.analysedSequences = None
         self.frameButtons = []
         self.selectedFrame = None
+        self.selectFrameText = None
 
         container = QWidget()
         self.setCentralWidget(container)
@@ -85,8 +86,12 @@ class MainWindow(QMainWindow):
         self.analyseButton.setEnabled(valid)
 
     def analyse_sequence(self):
+        self.clear_bottom_section()
         self.analysedSequences = check_sequence(self.sequence)
-        self.emptyText.setText("Now select frame")
+
+        self.selectFrameText = QLabel("Now select frame")
+        self.selectFrameText.setAlignment(Qt.AlignCenter)
+        self.bottom_layout.addWidget(self.selectFrameText)
 
         for frameButton in self.frameButtons:
             frameButton.setEnabled(True)

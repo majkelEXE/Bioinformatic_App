@@ -28,30 +28,25 @@ aminoacidToProtein = {
     'GGU': 'G', 'GGC': 'G', 'GGA': 'G', 'GGG': 'G',
 }
 
-result = {
-    'option1': [],
-    'option2': [],
-    'option3': []
-}
 
-def translate_to_protein(rna, option):
+def translate_to_protein(rna, option, result):
     if len(rna[len(rna) - 1]) != 3:
         rna.pop()
     protein = []
     for i in rna:
         protein.append(aminoacidToProtein.get(i))
     protein = ''.join(protein)
-    find_start_and_stop(protein, option)
+    find_start_and_stop(protein, option, result)
 
 
-def find_start_and_stop(protein, option):
+def find_start_and_stop(protein, option, result):
     index_start = protein.find('M')
     if index_start != -1:
         try:
             index_stop = protein.index("[STOP]", index_start)
         except ValueError:
             return
-        
+
         if index_stop != -1:
             startStop = protein[index_start:index_stop + 6]
             protein = protein[index_stop + 6:]
@@ -64,7 +59,7 @@ def find_start_and_stop(protein, option):
             elif option == 3:
                 if startStop not in result['option3']:
                     result['option3'].append(startStop.replace('[STOP]', ''))
-            find_start_and_stop(protein, option)
+            find_start_and_stop(protein, option, result)
 
 
 def get_from_file(name):
@@ -74,6 +69,12 @@ def get_from_file(name):
 
 
 def check_sequence(rna):
+    result = {
+        'option1': [],
+        'option2': [],
+        'option3': []
+    }
+
     rna = rna.upper()
     if 'T' in rna and 'U' not in rna:
         rna = rna.replace('T', 'U')
@@ -89,33 +90,32 @@ def check_sequence(rna):
         option2 = [rna[i:i + 3] for i in range(1, len(rna), 3)]
         option3 = [rna[i:i + 3] for i in range(2, len(rna), 3)]
 
-        translate_to_protein(option1, 1)
-        translate_to_protein(option2, 2)
-        translate_to_protein(option3, 3)
+        translate_to_protein(option1, 1, result)
+        translate_to_protein(option2, 2, result)
+        translate_to_protein(option3, 3, result)
 
         return result
-
 
 # example RNA sequence
 # sequence = 'AAUGUCGGUCAGCUUUGAGAAAACCAUGGUCAAAAUGAGCGCUUUGAAGCAUUUCGGCCAGAAGCAUGCGGGUAUGCCAGCCUUACCAGACGCAAUUAGGCACAGUGCCCCCUCAGCUCCGACUGAGAACCGCGCAGACCUAUUAUAUGCAAGUGUGAUGCGCCAGCUAACAGUGUACAGACACGUGCGUUAGUCCCUGCGUCCCGAUCCCAACGGAAAAGGUGAUAUUGCGGGGUUCGCACUGGGCUUCACUAAAGGCUAGGGACCUCGAAGUCUUUUCAGCCGUUAACUCUUACAUAC'
 # dna = 'CCGGGAAGGGGTTCGCAAGTCGCACCCTAAACGATGTTGAAGGCTCAGGATGTACACGCACTAGTACAATACATACGTGTTCCGGCTCTTATCCTGCATCGGAAGCTCAATCATGCATCGCACCAGCGTGTTCGTGTCATCTAGGAGGGGCGCGTAGGATAAATAATTCAATTAAGATATCGTTATGCTAGTATACGCCTACCCGTCACCGGCCAACAGTGTGCAGATGGCGCCACGAGTTACTGGCCCTGATTTCTCCGCTTCTAATACCGCACACTGGGCAATACGAGCTCAAGCCAG'
 
 #
-#READY EXAMPLES
+# READY EXAMPLES
 #
 
 # sequence = "AAUGUCGGUCAGCUUUGAGAAAACCAUGGUCAAAAUGAGCGCUUUGAAGCAUUUCGGCCAGAAGCAUGCGGGUAUGCCAGCCUUACCAGACGCAAUUAGGCACAGUGCCCCCUCAGCUCCGACUGAGAACCGCGCAGACCUAUUAUAUGCAAGUGUGAUGCGCCAGCUAACAGUGUACAGACACGUGCGUUAGUCCCUGCGUCCCGAUCCCAACGGAAAAGGUGAUAUUGCGGGGUUCGCACUGGGCUUCACUAAAGGCUAGGGACCUCGAAGUCUUUUCAGCCGUUAACUCUUACAUAC"
 # print(check_sequence(sequence))
 
 #
-#sequence = "taagaggctacacagtcttgaggaaactagaattagaaactaacgctactctcgtctccgtccccgttcttaaaggtaagccgcgtgcactaggtcagcgggcgggatcctcttcgttatcctcccccaaaaggtcttgcggcaccaaggatccccaccataaaactcatgcctatcactagtcgcgactggatgcttataagcgacagcggcctagtgaagggtggtagacaatctcagtgtcttacaaacggtatacctgacctgcgacggctaattacgcactttcaatcttaagttgaggttatcagccggaccaaacactctgtgctcttacttgctgggttccaggagtgcgcgccacgtgaagtcgacaaacttcaaaagcttcgcaggactccacgcagggactccaacggaccttctaacctacccgtgatgtctgctccacgccagctagactcatgccgtcaatgtctggctatattggttaaaagctctcatcaccgtcgatttttttgtggttcgaggccacggctttactagtcccgtaagaccgtggtggtatgggcagcctacgatatgtttagcatcggagaacgtgaagtaaagatattggagatactggacctgattcgatgcactacacaaggccagtctctataggggccctctttgtgtccttagaattacgagcgagattaatgctacaaaggaaagagaaggtcggatgagggtgttagtgacaaatactatgtggtgggccacgaacattacatcacctccacggcacggaggcatggtacgcatatatctttttccctgtttgaccagggggttgatcagacgattcttttgccagtaacagtaacgcgtcagcattgctacgtcatgagtgattcgctagcagaccttgtccacgaataatggcgcacaaactccgcgaacccctcgttcactgaatcaatggttgtgccagcgttggcggtgtgacatacgg"
-#print(check_sequence(sequence))
+# sequence = "taagaggctacacagtcttgaggaaactagaattagaaactaacgctactctcgtctccgtccccgttcttaaaggtaagccgcgtgcactaggtcagcgggcgggatcctcttcgttatcctcccccaaaaggtcttgcggcaccaaggatccccaccataaaactcatgcctatcactagtcgcgactggatgcttataagcgacagcggcctagtgaagggtggtagacaatctcagtgtcttacaaacggtatacctgacctgcgacggctaattacgcactttcaatcttaagttgaggttatcagccggaccaaacactctgtgctcttacttgctgggttccaggagtgcgcgccacgtgaagtcgacaaacttcaaaagcttcgcaggactccacgcagggactccaacggaccttctaacctacccgtgatgtctgctccacgccagctagactcatgccgtcaatgtctggctatattggttaaaagctctcatcaccgtcgatttttttgtggttcgaggccacggctttactagtcccgtaagaccgtggtggtatgggcagcctacgatatgtttagcatcggagaacgtgaagtaaagatattggagatactggacctgattcgatgcactacacaaggccagtctctataggggccctctttgtgtccttagaattacgagcgagattaatgctacaaaggaaagagaaggtcggatgagggtgttagtgacaaatactatgtggtgggccacgaacattacatcacctccacggcacggaggcatggtacgcatatatctttttccctgtttgaccagggggttgatcagacgattcttttgccagtaacagtaacgcgtcagcattgctacgtcatgagtgattcgctagcagaccttgtccacgaataatggcgcacaaactccgcgaacccctcgttcactgaatcaatggttgtgccagcgttggcggtgtgacatacgg"
+# print(check_sequence(sequence))
 
-#sequence = "caaccacactggagaacgagtaagggatcgggcgagcggtactctaaatccaaacggtataataagagctccgcgtaaagtcaaggattctgaaagatttgagtgtctcgccgcattccgctacaaagatctggcatattggtcaccttctatcggttaattccgaaaaatttggctaccagatatggatatgagttagatttaaagcggtagtgagaagttccaccacattgcgccgatcagtagaatggcccaaaagtcgcctatctgcctagtcagaaactgaccgagagcgggagtccgtagcactctcaagagagacgttgtatagtgtgcagtcacttcggtgccctactgcgtaacctggggtccagccggccaatgcgggtcggcgtcggacgatacgtgcagctacgctaaaactcccagagggaggcagacaccaaggggtcaccatccagtgccacaaagagcctataatggttggatggcttcttattataaaagaaggagagcataactgcggtggtggtaggtttacaatccagcgagccgggcgtcgtactgattagagcatataaacctggattaatcaacacccttcatcacggctcgattccatcggacggcagacgaaagcagactggcttttgcggcacggggatatgcggtaagccaggataagaacaacattttacttcgcaaatgacctggtgcgcttttacgacaataataggtcgtttttgggaagtcacgggtcggcggattcgggatcagcgggttatctagatcggcgcgtttagcaagggtgccgcaggccgtactgtactattgacacttaatacccgtactaatggatgaacagcgttctaatactgtcacggtacctcatgcatgacctagaacaagtccatatcgaagcttgttcgagcatcgtgaaaccggccgagcacccggtcttgctactggctcccattatctaacggctaacaagggacc"
-#print(check_sequence(sequence))
+# sequence = "caaccacactggagaacgagtaagggatcgggcgagcggtactctaaatccaaacggtataataagagctccgcgtaaagtcaaggattctgaaagatttgagtgtctcgccgcattccgctacaaagatctggcatattggtcaccttctatcggttaattccgaaaaatttggctaccagatatggatatgagttagatttaaagcggtagtgagaagttccaccacattgcgccgatcagtagaatggcccaaaagtcgcctatctgcctagtcagaaactgaccgagagcgggagtccgtagcactctcaagagagacgttgtatagtgtgcagtcacttcggtgccctactgcgtaacctggggtccagccggccaatgcgggtcggcgtcggacgatacgtgcagctacgctaaaactcccagagggaggcagacaccaaggggtcaccatccagtgccacaaagagcctataatggttggatggcttcttattataaaagaaggagagcataactgcggtggtggtaggtttacaatccagcgagccgggcgtcgtactgattagagcatataaacctggattaatcaacacccttcatcacggctcgattccatcggacggcagacgaaagcagactggcttttgcggcacggggatatgcggtaagccaggataagaacaacattttacttcgcaaatgacctggtgcgcttttacgacaataataggtcgtttttgggaagtcacgggtcggcggattcgggatcagcgggttatctagatcggcgcgtttagcaagggtgccgcaggccgtactgtactattgacacttaatacccgtactaatggatgaacagcgttctaatactgtcacggtacctcatgcatgacctagaacaagtccatatcgaagcttgttcgagcatcgtgaaaccggccgagcacccggtcttgctactggctcccattatctaacggctaacaagggacc"
+# print(check_sequence(sequence))
 
-sequence = "cttgccgaaagtgtatccaaagcgtcgggttttcaagtttggactgacacatacgttcacaggcaatgaatcaaggatgagcgtagaccacatcaactaacagtattgatctgcgttgccataacgaggaccaaagccaacccacagtcagcgcggtagattcgctgtttctatgcacgccttagcgttaactgtcgctgatcaaaactcggccactccagtcgcaggctatacattcagtcttgccaacagcgaggacccgcagcttaggtggcagaactaatgcacgggtgcgcgagataactagagtacaaagtagcagcatcaggatcgttacatggagccgtgatcgacgaaaggcaggtgcgtgtaacgagtgtattcttca"
-print(check_sequence(sequence))
+# sequence = "cttgccgaaagtgtatccaaagcgtcgggttttcaagtttggactgacacatacgttcacaggcaatgaatcaaggatgagcgtagaccacatcaactaacagtattgatctgcgttgccataacgaggaccaaagccaacccacagtcagcgcggtagattcgctgtttctatgcacgccttagcgttaactgtcgctgatcaaaactcggccactccagtcgcaggctatacattcagtcttgccaacagcgaggacccgcagcttaggtggcagaactaatgcacgggtgcgcgagataactagagtacaaagtagcagcatcaggatcgttacatggagccgtgatcgacgaaaggcaggtgcgtgtaacgagtgtattcttca"
+# print(check_sequence(sequence))
 
 # sequence = "gatctcggaggtcacgtggacgttcccacttagggattacgtttgactattagagaagcgaagcatagtgactcatccggacatactggcctcggccctagagctcccccatgtggtcggtgcaattaagtgtgagtcgagtcagccagacagcggtgcctaacgggttataaatttgatgcaagtttccagctgcgaggaccacgtaatacgggacttgtttcgaccacgacgaaggtgcgggaatcacccttagagccctttatttataacttcgaaaataacatatttatcgctatcctatactcaaggttcaaaacatcatccctcacgattcttgggtaccatcgtcgctacgtttttataacgactcctaaggtgcaatcaaaccgccaacgatcggttccggttttccctgtcgacactatccgcgtattcggtcgaccgggacatcggtcatgtctcttttgtgccgaatgacgcacagtatgacatcggtcatcccatataaattaacctatgagggggaacccggtctttttcctggcaacttttctcttgactacc"
 # print(check_sequence(sequence))
