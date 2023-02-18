@@ -1,4 +1,6 @@
-#CORRECT
+import string
+
+# CORRECT
 aminoacidToPtotein = {
     'UUU': 'F', 'UUC': 'F',
     'UUA': 'L', 'UUG': 'L',
@@ -33,10 +35,11 @@ result = {
     'option3': []
 }
 
+
 # translate split RNA to protein
-def translateToProtein(rna, option):
+def translate_to_protein(rna, option):
     # remove last element if not possible to convert to protein
-    if len(rna[len(rna)-1]) != 3:
+    if len(rna[len(rna) - 1]) != 3:
         rna.pop()
     # convert RNA to protein
     protein = []
@@ -46,21 +49,21 @@ def translateToProtein(rna, option):
     # print('---' +protein)
     # find start and stop codons
     # show only the part between start and stop codons
-    findStartAndStop(protein, option)
+    find_start_and_stop(protein, option)
 
 
-def findStartAndStop(protein, option):
+def find_start_and_stop(protein, option):
     index_start = protein.find('M')
     if index_start != -1:
         # startStop = protein[index:]
         # index_stop = protein.find('[STOP]')
-        #find first occurance of [STOP] after index_start
+        # find first occurance of [STOP] after index_start
         index_stop = protein.index("[STOP]", index_start)
         if index_stop != -1:
             # if option == 3:
-                # print(protein)
-            startStop = protein[index_start:index_stop+6]
-            protein = protein[index_stop+6:]
+            # print(protein)
+            startStop = protein[index_start:index_stop + 6]
+            protein = protein[index_stop + 6:]
             # print(protein)
             # save to dictionary
             if option == 1:
@@ -72,22 +75,22 @@ def findStartAndStop(protein, option):
             elif option == 3:
                 if startStop not in result['option3']:
                     result['option3'].append(startStop)
-            findStartAndStop(protein, option)
+            find_start_and_stop(protein, option)
 
-def getFromFile(name):
+
+def get_from_file(name):
     # read file
     with open(name) as file:
         rna = file.read().replace('\n', '')
         check_sequence(rna)
 
-import string
 
 def check_sequence(rna):
     # check if sequence contains 'T' and replace it with 'U'
     if 'T' in rna and 'U' not in rna:
         rna = rna.replace('T', 'U')
     # check if sequence is correct
-    lettersToCheck = list(string.printable)	
+    lettersToCheck = list(string.printable)
     lettersToCheck.remove('U')
     lettersToCheck.remove('A')
     lettersToCheck.remove('G')
@@ -96,22 +99,23 @@ def check_sequence(rna):
         return 0
     else:
         # split RNA sequence into threes with offset
-        option1 = [rna[i:i+3] for i in range(0, len(rna), 3)]
-        option2 = [rna[i:i+3] for i in range(1, len(rna), 3)]
-        option3 = [rna[i:i+3] for i in range(2, len(rna), 3)]
+        option1 = [rna[i:i + 3] for i in range(0, len(rna), 3)]
+        option2 = [rna[i:i + 3] for i in range(1, len(rna), 3)]
+        option3 = [rna[i:i + 3] for i in range(2, len(rna), 3)]
 
-        translateToProtein(option1, 1)
-        translateToProtein(option2, 2)
-        translateToProtein(option3, 3)
+        translate_to_protein(option1, 1)
+        translate_to_protein(option2, 2)
+        translate_to_protein(option3, 3)
 
         return result
 
+
 # example RNA sequence
-#rna = 'AAUGUCGGUCAGCUUUGAGAAAACCAUGGUCAAAAUGAGCGCUUUGAAGCAUUUCGGCCAGAAGCAUGCGGGUAUGCCAGCCUUACCAGACGCAAUUAGGCACAGUGCCCCCUCAGCUCCGACUGAGAACCGCGCAGACCUAUUAUAUGCAAGUGUGAUGCGCCAGCUAACAGUGUACAGACACGUGCGUUAGUCCCUGCGUCCCGAUCCCAACGGAAAAGGUGAUAUUGCGGGGUUCGCACUGGGCUUCACUAAAGGCUAGGGACCUCGAAGUCUUUUCAGCCGUUAACUCUUACAUAC' 
+# sequence = 'AAUGUCGGUCAGCUUUGAGAAAACCAUGGUCAAAAUGAGCGCUUUGAAGCAUUUCGGCCAGAAGCAUGCGGGUAUGCCAGCCUUACCAGACGCAAUUAGGCACAGUGCCCCCUCAGCUCCGACUGAGAACCGCGCAGACCUAUUAUAUGCAAGUGUGAUGCGCCAGCUAACAGUGUACAGACACGUGCGUUAGUCCCUGCGUCCCGAUCCCAACGGAAAAGGUGAUAUUGCGGGGUUCGCACUGGGCUUCACUAAAGGCUAGGGACCUCGAAGUCUUUUCAGCCGUUAACUCUUACAUAC'
 # dna = 'CCGGGAAGGGGTTCGCAAGTCGCACCCTAAACGATGTTGAAGGCTCAGGATGTACACGCACTAGTACAATACATACGTGTTCCGGCTCTTATCCTGCATCGGAAGCTCAATCATGCATCGCACCAGCGTGTTCGTGTCATCTAGGAGGGGCGCGTAGGATAAATAATTCAATTAAGATATCGTTATGCTAGTATACGCCTACCCGTCACCGGCCAACAGTGTGCAGATGGCGCCACGAGTTACTGGCCCTGATTTCTCCGCTTCTAATACCGCACACTGGGCAATACGAGCTCAAGCCAG'
 
 # read from variable
-rna = "AAUGUCGGUCAGCUUUGAGAAAACCAUGGUCAAAAUGAGCGCUUUGAAGCAUUUCGGCCAGAAGCAUGCGGGUAUGCCAGCCUUACCAGACGCAAUUAGGCACAGUGCCCCCUCAGCUCCGACUGAGAACCGCGCAGACCUAUUAUAUGCAAGUGUGAUGCGCCAGCUAACAGUGUACAGACACGUGCGUUAGUCCCUGCGUCCCGAUCCCAACGGAAAAGGUGAUAUUGCGGGGUUCGCACUGGGCUUCACUAAAGGCUAGGGACCUCGAAGUCUUUUCAGCCGUUAACUCUUACAUAC"
-print(check_sequence(rna))
+sequence = "AAUGUCGGUCAGCUUUGAGAAAACCAUGGUCAAAAUGAGCGCUUUGAAGCAUUUCGGCCAGAAGCAUGCGGGUAUGCCAGCCUUACCAGACGCAAUUAGGCACAGUGCCCCCUCAGCUCCGACUGAGAACCGCGCAGACCUAUUAUAUGCAAGUGUGAUGCGCCAGCUAACAGUGUACAGACACGUGCGUUAGUCCCUGCGUCCCGAUCCCAACGGAAAAGGUGAUAUUGCGGGGUUCGCACUGGGCUUCACUAAAGGCUAGGGACCUCGAAGUCUUUUCAGCCGUUAACUCUUACAUAC"
+print(check_sequence(sequence))
 
-# getFromFile('data.txt')
+# get_from_file('data.txt')
