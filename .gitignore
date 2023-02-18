@@ -131,5 +131,5 @@ dmypy.json
 .pyre/
 
 # svg patterns
-amino_acid_visualizer/structural_pattern.svg
-amino_acid_visualizer/structural_pattern_with_highlights.svg
+structural_pattern.svg
+structural_pattern_with_highlights.svg

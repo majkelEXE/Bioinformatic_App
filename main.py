@@ -7,8 +7,8 @@ from PySide6.QtWidgets import (
 )
 
 from amino_acid_interpreter.main import check_sequence
-
 from amino_acid_plots.main import PlotsWindow
+from amino_acid_visualizer.main import VisualizerWindow
 
 
 class MainWindow(QMainWindow):
@@ -139,7 +139,8 @@ class MainWindow(QMainWindow):
             protein_layout.addWidget(plotsButton)
 
     def show_visualization(self, protein):
-        print(protein)
+        print("vis")
+        w.visualizerWindow = VisualizerWindow(protein)
 
     def show_plots(self, protein):
         w.plotsWindow = PlotsWindow(protein)

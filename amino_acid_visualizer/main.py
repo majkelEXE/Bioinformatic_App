@@ -12,12 +12,12 @@ from PySide6.QtWidgets import QMainWindow, QLabel, QWidget, QVBoxLayout, QGridLa
 from PySide6.QtCore import Qt
 from PySide6.QtSvgWidgets import QSvgWidget
 
-svg = open('../.venv/Lib/site-packages/pikachu/smiles/smiles.py', "rt")
+svg = open('./.venv/Lib/site-packages/pikachu/smiles/smiles.py', "rt")
 data = svg.read()
 data = data.replace("'p', 's'", "'p', 's', 'Se'")
 svg.close()
 
-svg = open('../.venv/Lib/site-packages/pikachu/smiles/smiles.py', "wt")
+svg = open('./.venv/Lib/site-packages/pikachu/smiles/smiles.py', "wt")
 svg.write(data)
 svg.close()
 
@@ -126,37 +126,18 @@ def get_molecular_mass(sequence_string):
 
 # -------------------------------------------------------------------------------------------------------------------------------------------------------
 
-class MainWindow(QMainWindow):
+class VisualizerWindow(QMainWindow):
 
-    def __init__(self):
-        super(MainWindow, self).__init__()
+    def __init__(self, protein):
+        super().__init__()
 
-        self.setWindowTitle("Structural Pattern")
+        self.setWindowTitle(f"{protein} - visualizer")
         self.setFixedSize(QSize(600, 400))
 
         self.win = None
         self.error = None
 
-        self.sequence = QLineEdit()
-        self.sequence.setPlaceholderText("Provide Sequence")
-
         self.mainLayout = QVBoxLayout()
-        self.mainLayout.addWidget(self.sequence)
-
-        self.acidButtons = QGridLayout()
-
-        for i, acid in enumerate(acceptable_acids):
-            button = QPushButton(acid)
-
-            button.pressed.connect(lambda a=acid: self.add_acid(a))
-
-            self.acidButtons.addWidget(button, math.floor(i / 7), i - (7 * math.floor(i / 7)))
-
-        self.mainLayout.addLayout(self.acidButtons)
-
-        self.generateButton = QPushButton("Generate")
-        self.generateButton.pressed.connect(self.display_structural_pattern)
-        self.mainLayout.addWidget(self.generateButton)
 
         self.svgLayout = QHBoxLayout()
         self.mainLayout.addLayout(self.svgLayout)
@@ -175,8 +156,9 @@ class MainWindow(QMainWindow):
         widget.setLayout(self.mainLayout)
         self.setCentralWidget(widget)
 
-    def add_acid(self, acid):
-        self.sequence.setText(self.sequence.text() + acid)
+        self.display_structural_pattern(protein)
+
+        self.show()
 
     def raise_error(self, message):
         self.error = True
@@ -233,13 +215,11 @@ class MainWindow(QMainWindow):
         new_svgH.write(data)
         new_svgH.close()
 
-    def display_structural_pattern(self):
+    def display_structural_pattern(self, sequence):
         self.error = False
 
         # for acid, color in amino_acids.items():
         #     print(acid + " - " + color)
-
-        sequence = self.sequence.text().upper()
 
         if sequence:
 
@@ -270,14 +250,3 @@ class MainWindow(QMainWindow):
                 self.mass.setText("Mass: " + str(round(get_molecular_mass(sequence), 5)))
         else:
             self.raise_error("Please Provide Sequence!")
-
-
-if not QtWidgets.QApplication.instance():
-    app = QtWidgets.QApplication(sys.argv)
-else:
-    app = QtWidgets.QApplication.instance()
-
-window = MainWindow()
-window.show()
-
-app.exec()
