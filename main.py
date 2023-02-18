@@ -1,7 +1,5 @@
 import sys
-import sqlite3
 from functools import partial
-from datetime import date, datetime
 
 from PySide6.QtCore import QSize, Qt
 from PySide6.QtWidgets import (
@@ -17,7 +15,11 @@ class MainWindow(QMainWindow):
 
         self.setFixedWidth(400)
         self.setWindowTitle("Bioinformatic App")
+
         self.sequence = ""
+        self.analysedSequences = None
+        self.frameButtons = []
+        self.selectedFrame = None
 
         container = QWidget()
         self.setCentralWidget(container)
@@ -40,30 +42,47 @@ class MainWindow(QMainWindow):
         self.analyseButton.setFixedWidth(120)
         self.analyseButton.setEnabled(False)
         self.analyseButton.clicked.connect(self.analyse_sequence)
-
         top_layout.addWidget(self.analyseButton)
 
-        mid_layout = QVBoxLayout()
+        mid_layout = QHBoxLayout()
         mid_layout.setContentsMargins(0, 0, 0, 10)  # left, top, right, bottom
         layout.addLayout(mid_layout)
 
+        for i in range(1, 4):
+            frameButton = QPushButton(f"Frame {i}")
+            frameButton.setFixedWidth(120)
+            frameButton.setEnabled(False)
+            frameButton.clicked.connect(partial(self.change_frame, i))
+            mid_layout.addWidget(frameButton)
+            self.frameButtons.append(frameButton)
+
     def sequence_changed(self):
         self.sequence = self.analyseEdit.text()
+        self.analyseEdit.setText(self.sequence.upper())
+        self.validate_sequence()
+
+    def validate_sequence(self):
+        valid = True
 
         # sequence is empty
         if len(self.sequence.strip()) == 0:
-            self.analyseButton.setEnabled(False)
-            return
+            valid = False
 
         # sequence is invalid
         if check_sequence(self.sequence) == 0:
-            self.analyseButton.setEnabled(False)
-            return
+            valid = False
 
-        self.analyseButton.setEnabled(True)
+        self.analyseButton.setEnabled(valid)
 
     def analyse_sequence(self):
-        print(check_sequence(self.sequence))
+        self.analysedSequences = check_sequence(self.sequence)
+
+        for frameButton in self.frameButtons:
+            frameButton.setEnabled(True)
+
+    def change_frame(self, frameNumber):
+        self.selectedFrame = frameNumber
+        print(self.selectedFrame)
 
 
 if __name__ == "__main__":
