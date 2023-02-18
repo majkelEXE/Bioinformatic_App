@@ -13,7 +13,7 @@ class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
 
-        self.setFixedWidth(400)
+        # self.setFixedWidth(400)
         self.setWindowTitle("Bioinformatic App")
 
         self.sequence = ""
@@ -56,6 +56,14 @@ class MainWindow(QMainWindow):
             mid_layout.addWidget(frameButton)
             self.frameButtons.append(frameButton)
 
+        self.bottom_layout = QVBoxLayout()
+        self.bottom_layout.setContentsMargins(0, 0, 0, 10)  # left, top, right, bottom
+        layout.addLayout(self.bottom_layout)
+
+        self.emptyText = QLabel("First analyse rna/dna sequence")
+        self.emptyText.setAlignment(Qt.AlignCenter)
+        self.bottom_layout.addWidget(self.emptyText)
+
     def sequence_changed(self):
         self.sequence = self.analyseEdit.text()
         self.analyseEdit.setText(self.sequence.upper())
@@ -76,13 +84,54 @@ class MainWindow(QMainWindow):
 
     def analyse_sequence(self):
         self.analysedSequences = check_sequence(self.sequence)
+        self.emptyText.setText("Now select frame")
 
         for frameButton in self.frameButtons:
             frameButton.setEnabled(True)
 
     def change_frame(self, frameNumber):
         self.selectedFrame = frameNumber
-        print(self.selectedFrame)
+        self.generate_frame()
+
+    def clear_bottom_section(self):
+        for i in reversed(range(self.bottom_layout.count())):
+            widget = self.bottom_layout.itemAt(i).widget()
+            if widget is not None:
+                self.bottom_layout.itemAt(i).widget().deleteLater()
+
+            layout = self.bottom_layout.itemAt(i).layout()
+            if layout is not None:
+                while layout.count():
+                    layout.takeAt(0).widget().deleteLater()
+                layout.deleteLater()
+
+    def generate_frame(self):
+        self.clear_bottom_section()
+
+        for protein in self.analysedSequences[f"option{self.selectedFrame}"]:
+            protein_layout = QHBoxLayout()
+            protein_layout.setContentsMargins(0, 10, 0, 10)  # left, top, right, bottom
+            self.bottom_layout.addLayout(protein_layout)
+
+            proteinName = QLabel(protein)
+            # proteinName.setAlignment(Qt.AlignCenter)
+            protein_layout.addWidget(proteinName)
+
+            visualizationButton = QPushButton("Visualization")
+            visualizationButton.setFixedWidth(120)
+            visualizationButton.clicked.connect(partial(self.show_visualization, protein))
+            protein_layout.addWidget(visualizationButton)
+
+            plotsButton = QPushButton("Plots")
+            plotsButton.setFixedWidth(120)
+            plotsButton.clicked.connect(partial(self.show_plots, protein))
+            protein_layout.addWidget(plotsButton)
+
+    def show_visualization(self, protein):
+        print(protein)
+
+    def show_plots(self, protein):
+        print(protein)
 
 
 if __name__ == "__main__":
