@@ -4,8 +4,7 @@ from matplotlib import gridspec
 from matplotlib.patches import BoxStyle
 from matplotlib.backends.backend_qtagg import FigureCanvasQTAgg
 
-from PySide6.QtWidgets import QMainWindow, QWidget, QVBoxLayout, QPushButton, \
-    QLineEdit
+from PySide6.QtWidgets import QMainWindow, QWidget, QVBoxLayout
 
 from amino_acid_plots.modules.plots_tools.ExtendedTextBox import ExtendedTextBox
 from amino_acid_plots.modules.plots_tools.DragHandler import DragHandler

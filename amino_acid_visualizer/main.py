@@ -1,14 +1,16 @@
-import math
 import random
+
 from datetime import datetime
-from PySide6 import QtWidgets, QtCore
-from PySide6.QtCore import QSize
+
 from pikachu.general import svg_from_smiles, highlight_subsmiles_multiple
+
 from rdkit import Chem
 from rdkit.Chem.Descriptors import ExactMolWt
-import sys
+
+from PySide6 import QtCore
+from PySide6.QtCore import QSize
 from PySide6.QtWidgets import QMainWindow, QLabel, QWidget, QVBoxLayout, QGridLayout, QPushButton, \
-    QLineEdit, QMessageBox, QHBoxLayout, QFileDialog
+     QMessageBox, QHBoxLayout, QFileDialog
 from PySide6.QtCore import Qt
 from PySide6.QtSvgWidgets import QSvgWidget
 
