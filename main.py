@@ -1,14 +1,22 @@
 import sys
 from functools import partial
 
-from PySide6.QtCore import QSize, Qt
-from PySide6.QtWidgets import (
-    QApplication, QLabel, QMainWindow, QPushButton, QVBoxLayout, QWidget, QLineEdit, QHBoxLayout, QDateTimeEdit
-)
+from PySide6.QtCore import Qt
+from PySide6.QtWidgets import QApplication, QLabel, QMainWindow, QPushButton, QVBoxLayout, QWidget, QLineEdit, \
+    QHBoxLayout, QFileDialog
 
 from amino_acid_interpreter.main import check_sequence
 from amino_acid_plots.main import PlotsWindow
 from amino_acid_visualizer.main import VisualizerWindow
+
+
+def show_plots(protein):
+    w.plotsWindow = PlotsWindow(protein)
+
+
+def show_visualization(protein):
+    print("vis")
+    w.visualizerWindow = VisualizerWindow(protein)
 
 
 class MainWindow(QMainWindow):
@@ -16,6 +24,7 @@ class MainWindow(QMainWindow):
         super().__init__()
 
         # self.setFixedWidth(400)
+        self.setMinimumWidth(600)
         self.setWindowTitle("Bioinformatic App")
 
         self.sequence = ""
@@ -40,6 +49,11 @@ class MainWindow(QMainWindow):
         self.analyseEdit.setPlaceholderText("Enter DNA or RNA sequence")
         self.analyseEdit.textChanged.connect(self.sequence_changed)
         top_layout.addWidget(self.analyseEdit)
+
+        self.importButton = QPushButton("Import")
+        self.importButton.setFixedWidth(120)
+        self.importButton.clicked.connect(self.import_sequence)
+        top_layout.addWidget(self.importButton)
 
         self.analyseButton = QPushButton("Analyse")
         self.analyseButton.setFixedWidth(120)
@@ -71,6 +85,12 @@ class MainWindow(QMainWindow):
         self.sequence = self.analyseEdit.text()
         self.analyseEdit.setText(self.sequence.upper())
         self.validate_sequence()
+
+    def import_sequence(self):
+        fileData = QFileDialog.getOpenFileName(self, 'Open file', 'c:\\', "Text files (*.txt)")
+        fileName = fileData[0]
+        with open(fileName, 'r') as file:
+            self.analyseEdit.setText(file.read().rstrip())
 
     def validate_sequence(self):
         valid = True
@@ -130,20 +150,13 @@ class MainWindow(QMainWindow):
 
             visualizationButton = QPushButton("Visualization")
             visualizationButton.setFixedWidth(120)
-            visualizationButton.clicked.connect(partial(self.show_visualization, protein))
+            visualizationButton.clicked.connect(partial(show_visualization, protein))
             protein_layout.addWidget(visualizationButton)
 
             plotsButton = QPushButton("Plots")
             plotsButton.setFixedWidth(120)
-            plotsButton.clicked.connect(partial(self.show_plots, protein))
+            plotsButton.clicked.connect(partial(show_plots, protein))
             protein_layout.addWidget(plotsButton)
-
-    def show_visualization(self, protein):
-        print("vis")
-        w.visualizerWindow = VisualizerWindow(protein)
-
-    def show_plots(self, protein):
-        w.plotsWindow = PlotsWindow(protein)
 
 
 if __name__ == "__main__":
