@@ -239,7 +239,7 @@ class MainWindow(QMainWindow):
         # for acid, color in amino_acids.items():
         #     print(acid + " - " + color)
 
-        sequence = self.sequence.text()
+        sequence = self.sequence.text().upper()
 
         if sequence:
 
