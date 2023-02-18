@@ -1,24 +1,21 @@
-import sys
-
 import matplotlib
 import matplotlib.pyplot as plt
 from matplotlib import gridspec
 from matplotlib.patches import BoxStyle
 from matplotlib.backends.backend_qtagg import FigureCanvasQTAgg
 
-from PySide6 import QtWidgets
 from PySide6.QtWidgets import QMainWindow, QWidget, QVBoxLayout, QPushButton, \
     QLineEdit
 
-from modules.plots_tools.ExtendedTextBox import ExtendedTextBox
-from modules.plots_tools.DragHandler import DragHandler
-from modules.plots_tools.ResizeHandler import ResizeHandler
-from modules.plots_tools.ZoomHandler import ZoomHandler
-from modules.plots_tools.PlotStyler import PlotStyler
+from amino_acid_plots.modules.plots_tools.ExtendedTextBox import ExtendedTextBox
+from amino_acid_plots.modules.plots_tools.DragHandler import DragHandler
+from amino_acid_plots.modules.plots_tools.ResizeHandler import ResizeHandler
+from amino_acid_plots.modules.plots_tools.ZoomHandler import ZoomHandler
+from amino_acid_plots.modules.plots_tools.PlotStyler import PlotStyler
 
-from modules.analysis_tools.HydropathyCalculator import HydropathyCalculator
-from modules.analysis_tools.PolarityCalculator import PolarityCalculator
-from modules.analysis_tools.DisordersCalculator import DisordersCalculator
+from amino_acid_plots.modules.analysis_tools.HydropathyCalculator import HydropathyCalculator
+from amino_acid_plots.modules.analysis_tools.PolarityCalculator import PolarityCalculator
+from amino_acid_plots.modules.analysis_tools.DisordersCalculator import DisordersCalculator
 
 matplotlib.use('QtAgg')
 
@@ -72,48 +69,20 @@ class MplCanvas(FigureCanvasQTAgg):
         super(MplCanvas, self).__init__(fig)
 
 
-class MainWindow(QMainWindow):
+class PlotsWindow(QMainWindow):
+    def __init__(self, sequence):
+        super().__init__()
 
-    def __init__(self, *args, **kwargs):
-        super(MainWindow, self).__init__(*args, **kwargs)
+        self.setWindowTitle(f"{sequence} - plots")
+        self.resize(800, 1000)
 
-        self.sc = None
-
-        # Create toolbar, passing canvas as first parament, parent (self, the MainWindow) as second.
-        self.sequence_input = QLineEdit(
-            "DDWEIPDGQITVGQRIGSGSFGTVYKGKWHGDVAVKMLNVTAPTPQQLQAFKNEVGVLRKTRHVNILLFMGYSTAPQLAIVTQWCEGSSLYHHLHIIETKFEMIKLIDIARQTAQGMDYLHAKSIIHRDLKSNNIFLHEDLTVKIGDFGLATVKSRWSGSHQFEQLSGSILWMAPEVIRMQDKNPYSFQSDVYAFGIVLYELMTGQLPYSNINNRDQIIFMVGRGYLSPDLSKVRSNCPKAMKRLMAECLKKKRDERPLFPQILASIELLARSLPK")
-        self.sequence_input.setPlaceholderText("Enter your DNA or RNA sequence")
-
-        analyse_button = QPushButton("Analyse sequence")
-        analyse_button.clicked.connect(self.prepare_analysis)
-
-        self.content_layout = QVBoxLayout()
-        self.content_layout.addWidget(self.sequence_input)
-        self.content_layout.addWidget(analyse_button)
-
-        # Create a placeholder widget to hold our toolbar and canvas.
         self.widget = QWidget()
-        self.widget.setLayout(self.content_layout)
         self.setCentralWidget(self.widget)
 
-        self.show()
-
-    def prepare_analysis(self):
-        sequence = self.sequence_input.text()
-
-        if self.sc:
-            self.content_layout.removeWidget(self.sc)
-            self.sc.setParent(None)
+        self.content_layout = QVBoxLayout()
+        self.widget.setLayout(self.content_layout)
 
         self.sc = MplCanvas(self, sequence=sequence, dpi=100)
         self.content_layout.addWidget(self.sc)
 
-        self.resize(800, 100 * 10)
-
-
-app = QtWidgets.QApplication(sys.argv)
-
-window = MainWindow()
-window.show()
-
-app.exec()
+        self.show()

@@ -1,4 +1,4 @@
-from modules.analysis_tools.generic_calc_tools.LinearWeightCalculator import LinearWeightCalculator
+from amino_acid_plots.modules.analysis_tools.generic_calc_tools.LinearWeightCalculator import LinearWeightCalculator
 
 class PolarityCalculator:
     @staticmethod

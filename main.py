@@ -8,6 +8,8 @@ from PySide6.QtWidgets import (
 
 from amino_acid_interpreter.main import check_sequence
 
+from amino_acid_plots.main import PlotsWindow
+
 
 class MainWindow(QMainWindow):
     def __init__(self):
@@ -135,7 +137,7 @@ class MainWindow(QMainWindow):
         print(protein)
 
     def show_plots(self, protein):
-        print(protein)
+        w.plotsWindow = PlotsWindow(protein)
 
 
 if __name__ == "__main__":
