@@ -9,8 +9,8 @@ from rdkit.Chem.Descriptors import ExactMolWt
 
 from PySide6 import QtCore
 from PySide6.QtCore import QSize
-from PySide6.QtWidgets import QMainWindow, QLabel, QWidget, QVBoxLayout, QGridLayout, QPushButton, \
-     QMessageBox, QHBoxLayout, QFileDialog
+from PySide6.QtWidgets import QMainWindow, QLabel, QWidget, QVBoxLayout, QPushButton, QMessageBox, QHBoxLayout,\
+    QFileDialog
 from PySide6.QtCore import Qt
 from PySide6.QtSvgWidgets import QSvgWidget
 
@@ -130,7 +130,7 @@ def get_molecular_mass(sequence_string):
 
 class VisualizerWindow(QMainWindow):
 
-    def __init__(self, protein):
+    def __init__(self, protein, splash):
         super().__init__()
 
         self.setWindowTitle(f"{protein} - visualizer")
@@ -138,6 +138,7 @@ class VisualizerWindow(QMainWindow):
 
         self.win = None
         self.error = None
+        self.splash = splash
 
         self.mainLayout = QVBoxLayout()
 
@@ -165,6 +166,7 @@ class VisualizerWindow(QMainWindow):
 
     def raise_error(self, message):
         self.error = True
+        self.splash.close()
         QMessageBox.warning(None, 'Alert', message, QMessageBox.Ok)
         self.hide()
 

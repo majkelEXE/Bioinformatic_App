@@ -1,9 +1,11 @@
 import sys
 from functools import partial
+from time import sleep
 
 from PySide6.QtCore import Qt
+from PySide6.QtGui import QPixmap
 from PySide6.QtWidgets import QApplication, QLabel, QMainWindow, QPushButton, QVBoxLayout, QWidget, QLineEdit, \
-    QHBoxLayout, QFileDialog
+    QHBoxLayout, QFileDialog, QSplashScreen
 
 from amino_acid_interpreter.main import check_sequence
 from amino_acid_plots.main import PlotsWindow
@@ -15,8 +17,17 @@ def show_plots(protein):
 
 
 def show_visualization(protein):
-    print("vis")
-    w.visualizerWindow = VisualizerWindow(protein)
+    pixmap = QPixmap("splash screen.png")
+    splash = QSplashScreen(pixmap)
+    splash.show()
+    app.processEvents()
+    w.visualizerWindow = VisualizerWindow(protein, splash)
+    splash.close()
+
+
+def mousePressEvent(self, event):
+    # disable default "click-to-dismiss" behaviour
+    pass
 
 
 class MainWindow(QMainWindow):
