@@ -43,7 +43,7 @@ def translateToProtein(rna, option):
     for i in rna:
         protein.append(aminoacidToPtotein.get(i))
     protein = ''.join(protein)
-    print('---' +protein)
+    # print('---' +protein)
     # find start and stop codons
     # show only the part between start and stop codons
     findStartAndStop(protein, option)
@@ -57,8 +57,8 @@ def findStartAndStop(protein, option):
         #find first occurance of [STOP] after index_start
         index_stop = protein.index("[STOP]", index_start)
         if index_stop != -1:
-            if option == 3:
-                print(protein)
+            # if option == 3:
+                # print(protein)
             startStop = protein[index_start:index_stop+6]
             protein = protein[index_stop+6:]
             # print(protein)
@@ -78,11 +78,11 @@ def getFromFile(name):
     # read file
     with open(name) as file:
         rna = file.read().replace('\n', '')
-        executeAll(rna)
+        check_sequence(rna)
 
 import string
 
-def executeAll(rna):
+def check_sequence(rna):
     # check if sequence contains 'T' and replace it with 'U'
     if 'T' in rna and 'U' not in rna:
         rna = rna.replace('T', 'U')
@@ -93,7 +93,7 @@ def executeAll(rna):
     lettersToCheck.remove('G')
     lettersToCheck.remove('C')
     if any(letter in rna for letter in lettersToCheck) or len(rna) == 0:
-        print('Incorrect sequence!')
+        return 0
     else:
         # split RNA sequence into threes with offset
         option1 = [rna[i:i+3] for i in range(0, len(rna), 3)]
@@ -104,7 +104,7 @@ def executeAll(rna):
         translateToProtein(option2, 2)
         translateToProtein(option3, 3)
 
-        print(result)
+        return result
 
 # example RNA sequence
 #rna = 'AAUGUCGGUCAGCUUUGAGAAAACCAUGGUCAAAAUGAGCGCUUUGAAGCAUUUCGGCCAGAAGCAUGCGGGUAUGCCAGCCUUACCAGACGCAAUUAGGCACAGUGCCCCCUCAGCUCCGACUGAGAACCGCGCAGACCUAUUAUAUGCAAGUGUGAUGCGCCAGCUAACAGUGUACAGACACGUGCGUUAGUCCCUGCGUCCCGAUCCCAACGGAAAAGGUGAUAUUGCGGGGUUCGCACUGGGCUUCACUAAAGGCUAGGGACCUCGAAGUCUUUUCAGCCGUUAACUCUUACAUAC' 
@@ -112,6 +112,6 @@ def executeAll(rna):
 
 # read from variable
 rna = "AAUGUCGGUCAGCUUUGAGAAAACCAUGGUCAAAAUGAGCGCUUUGAAGCAUUUCGGCCAGAAGCAUGCGGGUAUGCCAGCCUUACCAGACGCAAUUAGGCACAGUGCCCCCUCAGCUCCGACUGAGAACCGCGCAGACCUAUUAUAUGCAAGUGUGAUGCGCCAGCUAACAGUGUACAGACACGUGCGUUAGUCCCUGCGUCCCGAUCCCAACGGAAAAGGUGAUAUUGCGGGGUUCGCACUGGGCUUCACUAAAGGCUAGGGACCUCGAAGUCUUUUCAGCCGUUAACUCUUACAUAC"
-executeAll(rna)
+print(check_sequence(rna))
 
 # getFromFile('data.txt')
