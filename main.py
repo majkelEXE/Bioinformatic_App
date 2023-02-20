@@ -1,6 +1,5 @@
 import sys
 from functools import partial
-from time import sleep
 
 from PySide6.QtCore import Qt
 from PySide6.QtGui import QPixmap
@@ -100,6 +99,9 @@ class MainWindow(QMainWindow):
     def import_sequence(self):
         fileData = QFileDialog.getOpenFileName(self, 'Open file', 'c:\\', "Text files (*.txt)")
         fileName = fileData[0]
+        if len(fileName) == 0:
+            return
+
         with open(fileName, 'r') as file:
             self.analyseEdit.setText(file.read().rstrip())
 
