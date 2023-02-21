@@ -16,8 +16,6 @@ Follow below steps to install and run Bioinformatic App in the correct way.
   .venv\scripts\activate
 
   pip install -r requirements.txt
-  
-  pip install -e git+https://github.com/IgorBialek/pikachu.git@main#egg=pikachu-chem
 
   python main.py
 ```
