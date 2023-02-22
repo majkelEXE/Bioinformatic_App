@@ -26,9 +26,6 @@ After installation and running the program, you have to provide RNA sequence(you
 ![Program start](https://i.imgur.com/0kLvLhU.jpg)
 
 After selecting you will see proteins found within this Frame.
-![Program after providing RNA](https://i.imgur.com/TnrSabF.jpg)
-
-After selecting you will see proteins found within this Frame.
 ![Program after providing RNA](https://i.imgur.com/tskqcOt.jpg)
 
 You can click on the visualization or plot button next to protein to see it's physical proteperties described with plots or to generate protein visualization.
