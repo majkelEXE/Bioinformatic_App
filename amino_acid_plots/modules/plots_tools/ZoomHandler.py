@@ -34,7 +34,7 @@ class ZoomHandler:
 
         if end_x_limit - start_x_limit > 5:
             self.subplot.set_xlim([start_x_limit if start_x_limit > 0 else 0,
-                     end_x_limit if end_x_limit < self.seq_len else self.seq_len])
+                     end_x_limit if end_x_limit < self.seq_len + 1 else self.seq_len + 1])
         
         self.subplot.figure.canvas.draw_idle()
 
@@ -47,4 +47,4 @@ class ZoomHandler:
         start_x_limit = xlim[0] - delta_end
         if end_x_limit - start_x_limit > 5:
             self.subplot.set_xlim([start_x_limit if start_x_limit > 0 else 0,
-                        end_x_limit if end_x_limit < self.seq_len else self.seq_len])
+                        end_x_limit if end_x_limit < self.seq_len + 1 else self.seq_len + 1])

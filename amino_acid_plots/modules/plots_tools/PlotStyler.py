@@ -21,10 +21,10 @@ class PlotStyler:
 
         self.subplot.figure.set_figheight(10)
 
-        if self.position == "random":
-            self.pyplot.setp(self.subplot.get_xticklabels(), visible=False)
-            yticks = self.subplot.yaxis.get_major_ticks()
-            yticks[-1].label1.set_visible(False)
+        # if self.position == "random":
+        #     self.pyplot.setp(self.subplot.get_xticklabels(), visible=False)
+        #     yticks = self.subplot.yaxis.get_major_ticks()
+        #     yticks[-1].label1.set_visible(False)
 
     def set_title(self, text):
         subplot_title = self.subplot.set_title(text, position=(.5, 1.02), backgroundcolor='#C8C8C8', color='white')
