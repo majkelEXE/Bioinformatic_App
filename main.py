@@ -1,8 +1,9 @@
 import sys
 from functools import partial
+import ctypes
 
 from PySide6.QtCore import Qt
-from PySide6.QtGui import QPixmap
+from PySide6.QtGui import QPixmap, QIcon
 from PySide6.QtWidgets import QApplication, QLabel, QMainWindow, QPushButton, QVBoxLayout, QWidget, QLineEdit, \
     QHBoxLayout, QFileDialog, QSplashScreen
 
@@ -36,6 +37,8 @@ class MainWindow(QMainWindow):
         # self.setFixedWidth(400)
         self.setMinimumWidth(600)
         self.setWindowTitle("Bioinformatic App")
+        self.setWindowIcon(QIcon("logo.png"))
+
 
         self.sequence = ""
         self.analysedSequences = None
@@ -172,7 +175,11 @@ class MainWindow(QMainWindow):
             protein_layout.addWidget(plotsButton)
 
 
+
 if __name__ == "__main__":
+    myappid = u"Motorola.BioinformaticApp" # arbitrary string
+    print(myappid)
+    ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID(myappid)
     app = QApplication(sys.argv)
     w = MainWindow()
     w.show()

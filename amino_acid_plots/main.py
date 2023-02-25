@@ -4,6 +4,7 @@ from matplotlib import gridspec
 from matplotlib.patches import BoxStyle
 from matplotlib.backends.backend_qtagg import FigureCanvasQTAgg
 
+from PySide6.QtGui import QIcon
 from PySide6.QtWidgets import QMainWindow, QWidget, QVBoxLayout
 
 from amino_acid_plots.modules.plots_tools.ExtendedTextBox import ExtendedTextBox
@@ -84,6 +85,7 @@ class PlotsWindow(QMainWindow):
 
         self.setWindowTitle(f"{sequence} - plots")
         self.resize(800, 1000)
+        self.setWindowIcon(QIcon("logo.png"))
 
         self.widget = QWidget()
         self.setCentralWidget(self.widget)

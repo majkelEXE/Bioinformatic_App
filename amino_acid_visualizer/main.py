@@ -8,6 +8,7 @@ from rdkit import Chem
 from rdkit.Chem.Descriptors import ExactMolWt
 
 from PySide6 import QtCore
+from PySide6.QtGui import QIcon
 from PySide6.QtCore import QSize
 from PySide6.QtWidgets import QMainWindow, QLabel, QWidget, QVBoxLayout, QPushButton, QMessageBox, QHBoxLayout,\
     QFileDialog
@@ -126,6 +127,7 @@ class VisualizerWindow(QMainWindow):
 
         self.setWindowTitle(f"{protein} - visualizer")
         self.setFixedSize(QSize(600, 400))
+        self.setWindowIcon(QIcon("logo.png"))
 
         self.win = None
         self.error = None
