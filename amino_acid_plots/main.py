@@ -15,6 +15,7 @@ from amino_acid_plots.modules.plots_tools.PlotStyler import PlotStyler
 from amino_acid_plots.modules.analysis_tools.HydropathyCalculator import HydropathyCalculator
 from amino_acid_plots.modules.analysis_tools.PolarityCalculator import PolarityCalculator
 from amino_acid_plots.modules.analysis_tools.DisordersCalculator import DisordersCalculator
+from amino_acid_plots.modules.analysis_tools.IsoelectricPointCalculator import IsoelectricPoint
 
 matplotlib.use('QtAgg')
 
@@ -65,6 +66,15 @@ class MplCanvas(FigureCanvasQTAgg):
 
         plt.tight_layout()
 
+        font = {
+            "y": 0.99,
+            "color": "#7a7a7a",
+            "fontweight": "bold",
+            "fontsize": 15.00
+        }
+
+        fig.suptitle("Isoelectric point: " + str(round(IsoelectricPoint.calc_isoelectric_point(sequence),2)), **font)
+        
         super(MplCanvas, self).__init__(fig)
 
 
