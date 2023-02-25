@@ -114,7 +114,7 @@ class DisordersCalculator:
                 iupred_score[idx] = 0
             else:
                 iupred_score[idx] = histo[int((weighted_energy_score[idx] - histo_min) * (1 / histo_step))]
-        return {"values": iupred_score, "colors": ['#EE6666']*len(seq)} 
+        return {"values": iupred_score, "colors": ['#70ff75']*len(seq)} 
 
     @staticmethod
     def iupred_redox(seq):
@@ -202,5 +202,5 @@ class DisordersCalculator:
                 corr = (par_a / (iupred_scores[idx] - par_c)) + par_b
             anchor_score[idx] = sign * (energy_gain[idx] + corr - par_b) * (iupred_scores[idx] - par_c)
             anchor_score[idx] = 1 / (1 + math.e ** (-22.97968 * (anchor_score[idx] - 0.0116)))
-        return {"values": anchor_score, "colors": ['#EE6666']*len(seq)} 
+        return {"values": anchor_score, "colors": ['#c26eff']*len(seq)} 
 
