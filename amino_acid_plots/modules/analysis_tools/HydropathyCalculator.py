@@ -3,6 +3,7 @@ class HydropathyCalculator:
     @staticmethod
     def hydropathy(*args):
         result = LinearWeightCalculator.calc_linear_weight("KYTJ820101", *args)
+        print(result)
 
         colors = []
         for value in result:

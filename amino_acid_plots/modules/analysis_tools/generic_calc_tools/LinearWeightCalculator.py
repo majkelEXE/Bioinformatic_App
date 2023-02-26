@@ -10,7 +10,7 @@ class LinearWeightCalculator:
         window_size = 9
         edge_size = 4
         if len(sequence) < 6:
-            return
+            return values
         if len(sequence) < 18:
             window_size = 3
             edge_size = 1
