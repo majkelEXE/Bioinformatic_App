@@ -192,7 +192,7 @@ class VisualizerWindow(QMainWindow):
 
         self.win = QWidget()
         self.win.setWindowTitle('Svg Preview')
-        self.setWindowIcon(QIcon("logo.png"))
+        self.win.setWindowIcon(QIcon("logo.png"))
         self.win.setLayout(layout)
         self.win.showMaximized()
 
