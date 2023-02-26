@@ -95,8 +95,6 @@ def check_sequence(rna):
             translate_to_protein(option2, 2, result)
             translate_to_protein(option3, 3, result)
 
-            print(result)
-
             return result
     else:
         return 0

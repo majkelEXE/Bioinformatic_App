@@ -39,7 +39,6 @@ class MainWindow(QMainWindow):
         self.setWindowTitle("Bioinformatic App")
         self.setWindowIcon(QIcon("logo.png"))
 
-
         self.sequence = ""
         self.analysedSequences = None
         self.frameButtons = []
@@ -152,32 +151,37 @@ class MainWindow(QMainWindow):
         self.clear_bottom_section()
 
         selectedProteins = self.analysedSequences[f"option{self.selectedFrame}"]
-        for i, protein in enumerate(selectedProteins):
-            protein_layout = QHBoxLayout()
-            protein_layout.setContentsMargins(0, 10, 0, 10)  # left, top, right, bottom
-            self.bottom_layout.addLayout(protein_layout)
 
-            proteinIndex = QLabel(f"{str(i + 1)}.")
-            proteinIndex.setFixedWidth(15)
-            protein_layout.addWidget(proteinIndex)
+        if len(selectedProteins) == 0:
+            emptyText = QLabel("This sequence frame is empty")
+            emptyText.setAlignment(Qt.AlignCenter)
+            self.bottom_layout.addWidget(emptyText)
+        else:
+            for i, protein in enumerate(selectedProteins):
+                protein_layout = QHBoxLayout()
+                protein_layout.setContentsMargins(0, 10, 0, 10)  # left, top, right, bottom
+                self.bottom_layout.addLayout(protein_layout)
 
-            proteinName = QLabel(protein)
-            protein_layout.addWidget(proteinName)
+                proteinIndex = QLabel(f"{str(i + 1)}.")
+                proteinIndex.setFixedWidth(15)
+                protein_layout.addWidget(proteinIndex)
 
-            visualizationButton = QPushButton("Visualization")
-            visualizationButton.setFixedWidth(120)
-            visualizationButton.clicked.connect(partial(show_visualization, protein))
-            protein_layout.addWidget(visualizationButton)
+                proteinName = QLabel(protein)
+                protein_layout.addWidget(proteinName)
 
-            plotsButton = QPushButton("Plots")
-            plotsButton.setFixedWidth(120)
-            plotsButton.clicked.connect(partial(show_plots, protein))
-            protein_layout.addWidget(plotsButton)
+                visualizationButton = QPushButton("Visualization")
+                visualizationButton.setFixedWidth(120)
+                visualizationButton.clicked.connect(partial(show_visualization, protein))
+                protein_layout.addWidget(visualizationButton)
 
+                plotsButton = QPushButton("Plots")
+                plotsButton.setFixedWidth(120)
+                plotsButton.clicked.connect(partial(show_plots, protein))
+                protein_layout.addWidget(plotsButton)
 
 
 if __name__ == "__main__":
-    myappid = u"Motorola.BioinformaticApp" # arbitrary string
+    myappid = u"Motorola.BioinformaticApp"  # arbitrary string
     print(myappid)
     ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID(myappid)
     app = QApplication(sys.argv)
