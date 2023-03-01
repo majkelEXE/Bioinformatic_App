@@ -36,6 +36,6 @@ Example RNA: caaccacactggagaacgagtaagggatcgggcgagcggtactctaaatccaaacggtataataaga
 
 ## Authors
 
-[Jakub Kowal](https://github.com/KubiO24)
-[Michał Dubrowski](https://github.com/majkelEXE)
-[Igor Białek](https://github.com/IgorBialek)
+- [Jakub Kowal](https://github.com/KubiO24)
+- [Michał Dubrowski](https://github.com/majkelEXE)
+- [Igor Białek](https://github.com/IgorBialek)
