@@ -2,7 +2,7 @@ import random
 
 from datetime import datetime
 
-from pikachu.general import svg_from_smiles, highlight_subsmiles_multiple
+from amino_acid_visualizer.pikachu.general import svg_from_smiles, highlight_subsmiles_multiple
 
 from rdkit import Chem
 from rdkit.Chem.Descriptors import ExactMolWt
