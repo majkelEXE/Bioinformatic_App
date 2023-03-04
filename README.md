@@ -59,7 +59,7 @@ Przykładowe sekwencje do sprawdzenia poprawności zainstalowanej aplikacji:
 
 [&emsp;4. amino_acid_visualizer](#_Toc128342679)
 
-[&emsp;5. tests](#_Toc128342680)
+[&emsp;5. tests](#5-tests)
 
 # **I. Wstęp**
 
