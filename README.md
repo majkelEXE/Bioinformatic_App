@@ -29,35 +29,35 @@ Przykładowe sekwencje do sprawdzenia poprawności zainstalowanej aplikacji:
 
 # Spis treści
 
-[I. Wstęp](#_Toc128342665)
+[I. Wstęp](#i-wstęp)
 
-[&emsp;1. Podział dokumentacji](#_Toc128342666)
+[&emsp;1. Podział dokumentacji](#1-podział-dokumentacji)
 
-[&emsp;2. Organizacja pracy](#_Toc128342667)
+[&emsp;2. Organizacja pracy](#2-organizacja-pracy)
 
-[&emsp;3. Proces developmentu](#_Toc128342668)
+[&emsp;3. Proces developmentu](#3-proces-developmentu)
 
-[&emsp;4. Ogólne spostrzeżenia](#_Toc128342669)
+[&emsp;4. Ogólne spostrzeżenia](#4-ogólne-spostrzeżenia)
 
-[II. Funkcjonalnośc aplikacji](#_Toc128342670)
+[II. Funkcjonalnośc aplikacji](#ii-funkcjonalnośc-aplikacji)
 
-[&emsp;1. Interfejs](#_Toc128342671)
+[&emsp;1. Interfejs](#1-interfejs)
 
-[&emsp;2. Analiza sekwencji](#_Toc128342672)
+[&emsp;2. Analiza sekwencji](#2-analiza-sekwencji)
 
-[&emsp;3. Wizualizacja białka](#_Toc128342673)
+[&emsp;3. Wizualizacja białka](#3-wizualizacja-białka)
 
-[&emsp;4. Wykres właściwości fizycznych białka](#_Toc128342674)
+[&emsp;4. Wykres właściwości fizycznych białka](#4-wykres-właściwości-fizycznych-białka)
 
-[III. Struktura aplikacji](#_Toc128342675)
+[III. Struktura aplikacji](#iii-struktura-aplikacji)
 
-[&emsp;1. Główna architektura aplikacji](#_Toc128342676)
+[&emsp;1. Główna architektura aplikacji](#1-główna-architektura-aplikacji)
 
-[&emsp;2. amino_acid_interpreter](#_Toc128342677)
+[&emsp;2. amino_acid_interpreter](#2-amino_acid_interpreter)
 
-[&emsp;3. amino_acid_plots](#_Toc128342678)
+[&emsp;3. amino_acid_plots](#3-amino_acid_plots)
 
-[&emsp;4. amino_acid_visualizer](#_Toc128342679)
+[&emsp;4. amino_acid_visualizer](#4-amino_acid_visualizer)
 
 [&emsp;5. tests](#5-tests)
 
